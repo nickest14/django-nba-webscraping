@@ -15,15 +15,18 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
+
 from django.conf import settings
 from django.conf.urls.static import static
 
-from .views import home
+from .views import home, detail
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', home, name='home'),
-    url(r'^nba-news/', include('nba_news.urls', namespace='nba_news')),
+    url(r'^detail/(?P<id>\d+)/$', detail, name='detail'),
+    url(r'^nba-news/', include('nba_news.urls', namespace='nba-news')),
 ]
 
 

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block begin %}
+<br><br><div class="col-md-10 col-xs-12">
+  <div class="card border">
+
+    <div class="card-block">
+      <h3> {{ list.title }}      </h3>
+      <h3> Article ID : {{ list.unique_id }} </h3>
+      <hr>
+    </div>
+
+    <div class="card-block">
+      <img src={{ list.image_link }}  alt="" title="" width="500px" height="300px">
+      <br><br><br> {{ list.content }} <br><br>
+
+    </div>
+  </div>
+</div>
+{% endblock begin %}

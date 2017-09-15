@@ -1,4 +1,6 @@
+{% extends "base.html" %}
 {% load static %}
+{% block begin %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -19,7 +21,22 @@
     <![endif]-->
   </head>
   <body>
-    <h1>Hello, world!</h1>
+    <h1>焦點新聞列表</h1>
+    {% for list in objects_list%}
+    <div class="col-md-10 col-xs-12">
+      <div class="card border">
+
+        <div class="card-block">
+
+          <h3><a href= '{{ list.get_absolute_url }}' >{{ list.title }}</a><br/></h3>
+          <!-- <h3><a href= '{% url "detail" id=list.unique_id %}' >{{ list.title }}</a><br/></h3> -->
+          <h3> Article ID : {{ list.unique_id }} </h3>
+          <hr>
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -27,7 +44,6 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
       <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
 
-
-      <h1>Welcome</h1>
   </body>
 </html>
+{% endblock begin %}
