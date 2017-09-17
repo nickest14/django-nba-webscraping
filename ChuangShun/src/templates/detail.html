@@ -1,19 +1,74 @@
 {% extends "base.html" %}
+{% load static %}
+{% block script %}
+<script>
+$(document).ready(function(){
+  var Newlist = [];
+
+  function attachNew(value){
+    var title = value.title;
+    var id = value.unique_id;
+    var content = value.content;
+    var image_link = value.image_link;
+    var date = value.date_display;
+    $("#news-list").append(
+  "<br/><br/><div class=\"col-md-10 col-xs-12\"><div class=\"card border\"><div class=\"card-block\"><h3>"+ title +"</h3><h3> Article ID :"+ id +"</h3><hr></div><div class=\"card-block\"><img src=" +image_link  +"alt=\"\" title=\"\" width=\"500px\" height=\"300px\"><br><br><br>"+ content +"<br><br></div></div></div><br/><br/>"
+  )
+  }
+
+  function parseNews(){
+     $.each(Newlist, function(key, value){
+          attachNew(value)
+      })
+  }
+  function fetchSingleNew( id ){
+    var fecthDetailUrl = '/api/nba-news/' + id + '/'
+   $.ajax({
+     url: fecthDetailUrl,
+     method: "GET",
+     success: function(data){
+     Newlist = data
+     parseNews()
+     },
+     error: function(data){
+       console.log("error")
+       console.log(data)
+     }
+   })
+  }
+  fetchSingleNew( {{ list.unique_id }} )
+  });
+
+</script>
+{% endblock script %}
+
+
 {% block begin %}
-<br><br><div class="col-md-10 col-xs-12">
-  <div class="card border">
 
-    <div class="card-block">
-      <h3> {{ list.title }}      </h3>
-      <h3> Article ID : {{ list.unique_id }} </h3>
-      <hr>
-    </div>
+<div id='news-list'>
 
-    <div class="card-block">
-      <img src={{ list.image_link }}  alt="" title="" width="500px" height="300px">
-      <br><br><br> {{ list.content }} <br><br>
-
-    </div>
-  </div>
 </div>
+
+<!-- <div class="col-md-10 col-xs-12"> -->
+  <!-- <div class="card border"> -->
+
+    <!-- <div class="card-block"> -->
+      <!-- <h3> {{ list.title }} </h3> -->
+      <!-- <h3> Article ID : {{ list.unique_id }} </h3> -->
+      <!-- <hr> -->
+    <!-- </div> -->
+
+    <!-- <div class="card-block"> -->
+      <!-- <img src={{ list.image_link }}  alt="" title="" width="500px" height="300px"> -->
+      <!-- <br><br><br> {{ list.content }} <br><br> -->
+    <!-- </div> -->
+  <!-- </div> -->
+<!-- </div> -->
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
 {% endblock begin %}
