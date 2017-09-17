@@ -27,6 +27,8 @@ urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^detail/(?P<id>\d+)/$', detail, name='detail'),
     url(r'^nba-news/', include('nba_news.urls', namespace='nba-news')),
+    url(r'^api/nba-news/', include('nba_news.api.urls', namespace='nba-news-api')),
+
 ]
 
 
