@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+ {% block begin %}
+
+{% if obj %}
+<br>
+<h1> New article </h1><br>
+
+{% for list in obj %}
+<hr>
+<div class="col-md-10 col-xs-12">
+  <div class="card border">
+
+    <div class="card-block">
+      <h3> {{ list.title }}      </h3>
+      <h3> Article ID : {{ list.article_id }} </h3>
+      <hr>
+    </div>
+    <div class="card-block">
+      <img src={{ list.imagelink }} alt="" title="" width="500px" height="300px">
+      <br><br><br> {{ list.content }} <br><br>
+    </div>
+  </div>
+</div>
+<hr>
+{% endfor %}
+
+{% else %}
+<br>
+<h1> Sorry,  焦點文章皆已更新至資料庫</h1> {% endif%}
+
+{% endblock begin %}

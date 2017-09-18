@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block script %}
+<script>
+$(document).ready(function(){
+  var nextNewUrl;
+  var NewList = [];
+
+ function attachNew(value){
+   var title = value.title;
+   var id = value.unique_id;
+   var content = value.content;
+   var image_link = value.image_link;
+   var date = value.date_display;
+
+   $("#news-list").append(
+ "<div class=\"col-md-6 col-xs-12\"><div class=\"card border\"><div class=\"card-block\"><h3><a style='color:#b22222' href= '/detail/" +id  +"'>"
+ +title +"</a><br/></h3><h3> Article ID : " +id +"<br/><br/> <input class=\'btn btn-primary pull-right\' style='background-color:#114166; top:-30px; right: 20px; position: relative; ' type=\"submit\" onclick= \"location.href='/detail/" +id + "';\" value=\"View\"/>" +"</div></div></div>"
+)
+ }
+
+ function parseNews(){
+   if (NewList == 0) {
+     $("#news-list").text("No tweets currently found.")
+   } else {
+     // tweets exist, parse & display them
+    $.each(NewList, function(key, value){
+         attachNew(value)
+     })
+   }
+ }
+
+ function fetchNews(url){
+     var fecthUrl;
+     if (!url) {
+       fecthUrl = "/api/nba-news/"
+     } else {
+       fecthUrl = url
+     }
+  $.ajax({
+    url: fecthUrl,
+    method: "GET",
+    success: function(data){
+      NewList = data.results
+      if (data.next){
+        nextNewUrl = data.next
+      } else {
+        $("#loadmore").css("display", "none")
+      }
+    parseNews()
+    },
+    error: function(data){
+      console.log("error")
+      console.log(data)
+    }
+  })
+}
+
+fetchNews()
+
+  $("#loadmore").click(function(event){
+    event.preventDefault()
+    if (nextNewUrl) {
+      fetchNews(nextNewUrl)
+    }
+})
+
+});
+</script>
+{% endblock script %}
+
+
+
+{% block begin %}
+<div>
+    <br><h1>焦點新聞列表</h1><br>
+
+    <div id='news-list'>
+
+    </div>
+    <div class="container " style="line-height: 5;">
+      <a style='font-size: 150%; color: #696969' href='#' id='loadmore'>Load More Tweets</a><br><br><br><br>
+    </div>
+</div>
+    <!-- {% for list in objects_list%} -->
+    <!-- <div class="col-md-6 col-xs-12"> -->
+      <!-- <div class="card border"> -->
+
+        <!-- <div class="card-block"> -->
+
+          <!-- <h3><a href= '{{ list.get_absolute_url }}' >{{ list.title }}</a><br/></h3> -->
+
+          <!-- <h3> Article ID : {{ list.unique_id }} </h3> -->
+          <!-- <hr> -->
+        <!-- </div> -->
+
+      <!-- </div> -->
+    <!-- </div> -->
+    <!-- {% endfor %} -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+      <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+
+
+
+{% endblock begin %}
