@@ -4,5 +4,4 @@ from .views import nba
 
 urlpatterns = [
     url(r'^$', nba, name='nba'), #/
-
 ]

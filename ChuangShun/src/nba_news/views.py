@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.views import View
 
-# from .function import video_parse, hot_video_parser, search_video_parser
-from .function import video_parse
 from .models import New
 import requests
 from bs4 import BeautifulSoup
@@ -37,12 +35,12 @@ def nba(request):
         content[0].find('div', {'class':'only_web'}).decompose()
         obj['content'] = content[0].text
         if New.objects.filter( unique_id = obj['article_id']) :
-            print( 'no' )
+            print( 'Exist' )
             pass
         else:
             New.objects.create( unique_id = obj['article_id'], title = obj['title'],
                             content= obj['content'], image_link = obj['imagelink'] )
             show.append(obj)
-            print('success')
+            print('Success add a article')
 
     return render(request, "nba_news/NBA.html", {"obj": show })

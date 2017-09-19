@@ -23,9 +23,8 @@ $(document).ready(function(){
 
  function parseNews(){
    if (NewList == 0) {
-     $("#news-list").text("No tweets currently found.")
+     $("#news-list").text("No NEWS currently found.")
    } else {
-     // tweets exist, parse & display them
     $.each(NewList, function(key, value){
          attachNew(value)
      })
@@ -81,7 +80,7 @@ fetchNews()
 
     </div>
     <div class="container " style="line-height: 5;">
-      <a style='font-size: 150%; color: #696969' href='#' id='loadmore'>Load More Tweets</a><br><br><br><br>
+      <a style='font-size: 150%; color: #696969' href='#' id='loadmore'> More News </a><br><br><br><br>
     </div>
 </div>
     <!-- {% for list in objects_list%} -->
