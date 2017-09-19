@@ -47,4 +47,5 @@ python manage.py runserver
 接著另一個執行  python manage.py celery beat
 ```
 ##### 即可定時在背景自動執行抓取文章的function!
+##### 有設定 signal, 當更新文章到資料庫時, 會顯示訊息在終端機中 (並不是在網頁上)
 
